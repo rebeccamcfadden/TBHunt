@@ -6,17 +6,21 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route("/results")
-def tacos():
-    return render_template('results.html')
-
 @app.route("/", methods=['POST'])
 def food():
     foodChoice = request.form['foodChoice']
     text = request.form.getlist('ingredients')
-    # zipCode = request.form['zipCode']
-    print(foodChoice)
-    return render_template('index.html')
+    allergies = request.form['allergies']
+    zipCode = request.form['zipCode']
+    posts = [{
+        'name': 'Test',
+        'cost': '$3.14',
+        'address': 'YourMom',
+        'item': foodChoice,
+        'description': ['hi','whattup'],
+
+    }]
+    return render_template('results.html', posts=posts)
 # @app.route("/about")
 # def yo():
 #     # return render_template('about.html', posts=posts, title='Title')

@@ -6,7 +6,7 @@
 
 @font-face{
     font-family: boldItalic;
-    src: url('/static/Fonts/NoticiaText-BoldItalic.ttf');
+    src: url('/static/Fonts/NoticiaText-Bold.ttf');
     font-weight: bold;
 }
 
@@ -16,14 +16,18 @@ html,body{
     height:100%;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: black !important;
+    background-color: #f4f4f4 !important;
 }
 
 .coName {
     font-family: boldItalic;
     font-size: 80px;
-    color: green;
+    color: #004692;
     margin-top: 10px;
 }
 
@@ -36,17 +40,18 @@ body {
 }
 
 .nav-item {
-    color: white !important;
+    color: #004692 !important;
 }
 
 .nav-item:hover {
-    background-color:green;
-    color:white;
+    background-color:#004692;
+    color:white !important;
     cursor: pointer;
 }
 
 .activeChoice {
-    background-color: green;
+    background-color: #004692;
+    color: white !important;
 }
 
 .choices {
@@ -62,11 +67,12 @@ body {
 }
 
 .headers {
-    font-family: regular;
-    color: white;
+    font-family: boldItalic;
+    color: #004692;
     text-decoration: underline;
     text-align: left;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .zipCode {
@@ -81,7 +87,7 @@ button{
     outline: 0;
     box-shadow: none;
     border: 0 !important;
-    background: #2c3e50;
+    background: #004692;
     background-image: none;
     width: 100%;
     height: 40px;
@@ -91,4 +97,12 @@ button{
     cursor: pointer;
     border-radius: .25em;
     font-family: regular;
+  }
+
+  .submitBtn {
+      border-radius: 20px;
+  }
+
+  .img-circle {
+      border-radius: 20px;
   }

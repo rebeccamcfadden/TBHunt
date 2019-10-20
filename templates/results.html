@@ -5,51 +5,36 @@
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>TBHunt - Results</title>
+    <title>FiestaFinder</title>
 </head>
 
 <body>
-    <div style="position: sticky; margin: 10px;">
+    <div style="margin: 10px;">
         <nav class="nav nav-pills">
-                <a href="/" class="nav-item nav-link rounded-0">Back</a> 
+                <a href="/" class="nav-item nav-link">Back</a> 
         </nav>
     </div>
     <div class="container w-100">
-        <div style="text-align: center;">
-            <h1>WHATTUP</h1>
-        </div>
         <div class="row justify-content-center align-items-center h-100" style="text-align: center;">
             <div class="col-md-6">
-                <a class="resultsInfo" href="/#">
+                {% for post in posts %}
+                <a class="resultsInfo" target="_blank" href="https://www.google.com/maps/dir//3119+Acorn+Wood+Way">
                     <div class="row" style="color: white;">
-                        <img class="img-circle" style="height: 100px; width: 100px"
+                        <img class="img-circle" style="height: 150px; width: 150px"
                             src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
-                        <div class="col" style="text-align: center;">
-                            <h1 class="companyInfo">Company Name</h1>
-                            <p class="companyInfo">Company Location</p>
+                        <div class="col-lg-4 colBorder" style="text-align: right;">
+                            <h1 class="companyInfo">{{ post.name }}</h1>
+                            <p class="companyInfo">Nothing <br> {{ post.address}}</p>
+                        </div>
+                        <div class="col companyInfo" style="text-align: left;">
+                                <h1>{{ post.item }}</h1>
+                                <p>{{ post.cost }} <br> Key Ingredients: 
+                                    {% for i in range(0,post.description|length) %} {{ post.description[i] }}</p>
+                                    {%  endfor %}
                         </div>
                     </div>
                 </a>
-                <a class="resultsInfo" href="/#">
-                    <div class="row" style="color: white;">
-                        <img class="img-circle" style="height: 100px; width: 100px"
-                            src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
-                        <div class="col" style="text-align: center;">
-                            <h1 class="companyInfo">Company Name</h1>
-                            <p class="companyInfo">Company Location</p>
-                        </div>
-                    </div>
-                </a>
-                <a class="resultsInfo" href="/#">
-                    <div class="row" style="color: white;">
-                        <img class="img-circle" style="height: 100px; width: 100px"
-                            src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
-                        <div class="col" style="text-align: center;">
-                            <h1 class="companyInfo">Company Name</h1>
-                            <p class="companyInfo">Company Location</p>
-                        </div>
-                    </div>
-                </a>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -17,12 +17,13 @@ html,body{
 }
 
 body {
-    background-color: black !important;
+    background-color: #f4f4f4 !important;
 }
 
 
 .companyInfo {
     font-family: regular;
+    color: #004692;
 }
 
 .resultsInfo:hover {
@@ -34,11 +35,18 @@ body {
 }
 
 .nav-item {
-    color: white !important;
+    color: #004692 !important;
 }
 
 .nav-item:hover {
-    background-color:green;
-    color:white;
+    background-color: #004692;
+    color:white !important;
     cursor: pointer;
+}
+
+.colBorder {
+    border-right: 3px solid;
+    border-color: #004692;
+    /* padding-right: 0px !important;
+    margin-right: 0px !important; */
 }
