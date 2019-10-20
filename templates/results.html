@@ -9,26 +9,28 @@
 </head>
 
 <body>
-    <div style="margin: 10px;">
+    <div style="margin: 10px; position: sticky !important; position: -webkit-sticky; top: 20px">
         <nav class="nav nav-pills">
                 <a href="/" class="nav-item nav-link">Back</a> 
         </nav>
     </div>
     <div class="container w-100">
-        <div class="row justify-content-center align-items-center h-100" style="text-align: center;">
+        <div class="row justify-content-center" style="width: 100%; text-align: center;">
             <div class="col-md-6">
                 {% for post in posts %}
-                <a class="resultsInfo" target="_blank" href="https://www.google.com/maps/dir//3119+Acorn+Wood+Way">
-                    <div class="row" style="color: white;">
-                        <img class="img-circle" style="height: 150px; width: 150px"
-                            src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
-                        <div class="col-lg-4 colBorder" style="text-align: right;">
-                            <h1 class="companyInfo">{{ post.name }}</h1>
+                <a class="resultsInfo" target="_blank" href="https://www.google.com/maps/dir//{{ post.mapLink }}">
+                    <div class="row justify-content-center foodBox" style="color: white;">
+                        <!-- <div class="col">
+                            <img class="img-circle" style="max-width: 100%; height:auto;" src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
+                        </div> -->
+                        <div class="col colBorder" style="text-align: right;">
+                            <h2 class="companyInfo">{{ post.name }}</h2>
                             <p class="companyInfo">Nothing <br> {{ post.address}}</p>
+                            <img class="img-circle" style="width: 50px; height:auto;" src="https://www.gstatic.com/images/branding/product/2x/maps_512dp.png">
                         </div>
-                        <div class="col companyInfo" style="text-align: left;">
-                                <h1>{{ post.item }}</h1>
-                                <p>Key Ingredients: {{ post.description }}</p>
+                        <div class="col-lg-6 companyInfo" style="text-align: left;">
+                                <h3>{{ post.item }}</h3>
+                                <p><u>Expected Price:</u> ${{ post.price}} <br> <u>Key Ingredients:</u> {{ post.description }}</p>
                         </div>
                     </div>
                 </a>

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request
 import pandas as pd
+from decimal import *
 
 app = Flask(__name__)
 
@@ -53,11 +54,13 @@ def food():
     topten = mydata.head(10)
     posts = []
     for index, row in topten.iterrows():
+        mapLink = row['address'].replace(" ", "+")
         mydict = {'item':row['menus.name'].title(),
                     'name':row['name'].title(),
                     'address':row['address'],
                     'description':row['menus.description'],
-                    'price':row['price.average']
+                    'price':str(round(Decimal(row['price.average']), 2)),
+                    'mapLink': mapLink,
                 }
         posts.append(mydict)
     return render_template('results.html', posts=posts)

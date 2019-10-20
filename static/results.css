@@ -10,11 +10,11 @@
     font-weight: bold;
 }
 
-html,body{
+/* html,body{
     width:100%;
     margin:0;
     height:100%;
-}
+} */
 
 body {
     background-color: #f4f4f4 !important;
@@ -46,7 +46,12 @@ body {
 
 .colBorder {
     border-right: 3px solid;
-    border-color: #004692;
+    border-color: grey;
     /* padding-right: 0px !important;
     margin-right: 0px !important; */
+}
+
+.foodBox {
+    border-color: grey !important;
+    border: 3px solid;
 }
