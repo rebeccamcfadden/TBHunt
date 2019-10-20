@@ -1,4 +1,3 @@
-
 .gcloudignore
 env/*
-
+node_modules/*
