@@ -24,25 +24,41 @@
                     <nav class="nav nav-pills nav-fill">
                         <!-- <div class="no-option-selected"> -->
                             <a class="nav-item nav-link rounded-0" id="tacos">&nbspTacos&nbsp&nbsp</a>
+                            <div>&nbsp&nbsp&nbsp</div>
                             <a class="nav-item nav-link rounded-0" id="burritos">Burritos</a>
-                        <!-- </div>
+                        <!-- </div> -->
                         <div class="option-selected" style="display:none;">
-
-                        </div> -->
+                        </div>
                     </nav>
                 </div>
-                <div>
-                    <select data-placeholder="Pick three ..." multiple class="chosen-select" tabindex="1">
-                        <option value=""></option>
-                        <option value="United States">United States</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="Afghanistan">Afghanistan</option>
-                        <option value="Aland Islands">Aland Islands</option>
-                        <option value="Albania">Albania</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="American Samoa">American Samoa</option>
-                    </select>
-                </div>
+                <form method="POST">
+                    <div class="ingredients1 choices">
+                        <input id="foodChoice" name="foodChoice" value="" type="hidden">
+                        <select name="ingredients" data-placeholder="Pick three ..." multiple class="chosen-select" tabindex="1">
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Aland Islands">Aland Islands</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="American Samoa">American Samoa</option>
+                        </select>
+                    </div>
+                    <div class="allergies choices">
+                            <select name="allergies" data-placeholder="Pick one ..." class="teno" tabindex="1">
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Aland Islands">Aland Islands</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="American Samoa">American Samoa</option>
+                            </select>
+                        </div>
+                    <div>     
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

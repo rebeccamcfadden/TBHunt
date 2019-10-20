@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect, request
 app = Flask(__name__)
 
 @app.route("/")
@@ -10,6 +10,13 @@ def home():
 def tacos():
     return render_template('food_template.html')
 
+@app.route("/", methods=['POST'])
+def food():
+    foodChoice = request.form['foodChoice']
+    text = request.form.getlist('ingredients')
+    # zipCode = request.form['zipCode']
+    print(foodChoice)
+    return render_template('index.html')
 # @app.route("/about")
 # def yo():
 #     # return render_template('about.html', posts=posts, title='Title')
