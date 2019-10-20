@@ -1,0 +1,178 @@
+fileDir= ("C:/Users/Nick Justice/Desktop/")
+import re
+#import spacy
+import math
+import pandas as pd
+from collections import Counter
+from matplotlib import pyplot as plt
+import seaborn as sns
+import numpy as np
+
+unnamedlist = []
+df = pd.read_csv(fileDir+"just-tacos-and-burritos.csv", sep=',', quotechar='"')
+for i in range(26,236):
+    unnamedlist.append("Unnamed:"+" "+str(i))
+df = df.drop(unnamedlist, axis=1)
+df.fillna("", inplace=True)
+#deleting unwanted columns
+del df["dateAdded"]
+del df["dateUpdated"]
+del df["keys"]
+del df["province"]
+del df["menus.dateSeen"]
+del df["priceRangeCurrency"]
+del df["menus.currency"]
+
+#turn menus.name into either taco or burrito
+tacovburrito = []
+df["menus.name"] = df["menus.name"].str.lower()
+for row in df["menus.name"]:
+    if "taco" in row:
+        tacovburrito.append("taco")
+    elif "burrito" in row:
+        tacovburrito.append("burrito")
+    else:
+        tacovburrito.append("")
+df["tacovburrito"] = pd.Series(tacovburrito, index=df.index)
+
+#Compute averages between menus.amountMax and menus.amountMin and new avg column
+df["menus.amountMax"] = df["menus.amountMax"].replace("",value=0)
+df["menus.amountMin"] = df["menus.amountMin"].replace("",value=0)
+df["menus.amountMax"] = df["menus.amountMax"].astype(float)
+df["menus.amountMin"] = df["menus.amountMin"].astype(float)
+summary_ave_data = df[["menus.amountMax","menus.amountMin"]].mean(numeric_only=True, axis=1)
+df["price.average"] = summary_ave_data
+del df["priceRangeMin"]
+del df["priceRangeMax"]
+del df["menus.amountMax"]
+del df["menus.amountMin"]
+
+# #Gets the most common nouns from each menu.description
+# filterphrase = ''
+# filter_nouns = {}
+# nlp = spacy.load("en_core_web_sm")
+# df["menus.description"].fillna("", inplace = True)
+# df["menus.description"].str.lower()
+# for i in range(8):
+#   filterphrase = ''
+#   begin = 0 + i*10000
+#   if i < 7:
+#     chunk = df["menus.description"][begin:begin+10000]
+#   else:
+#     chunk = df["menus.description"][begin:]
+#   for row in chunk:   
+#     filterphrase += ' '
+#     filterphrase += str(row)
+#   doc = nlp(filterphrase)
+#   for noun in [token.lemma_ for token in doc if token.pos_ == "NOUN"]:
+#     if noun not in filter_nouns.keys():
+#       filter_nouns.update({noun: 1})
+#     else:
+#       filter_nouns[noun] +=1
+
+
+# width = 1.0
+# from collections import OrderedDict
+# from operator import itemgetter
+# sort = OrderedDict(sorted(filter_nouns.items(), key=itemgetter(1)))
+
+# print(sort)
+# print(list(sort.keys())[-50:0])
+# plt.bar(list(sort.keys())[-25:], list(sort.values())[-25:], width, color = 'g')
+
+#Creates new column for each row with attributes from each description
+item_attributes = []
+for row in df["menus.description"]:
+    attribute_list = []
+    for attribute in filter_attributes:
+        if attribute in row:
+            attribute_list.append(attribute)
+    item_attributes.append(attribute_list)
+df["menus.attributes"] = item_attributes
+
+#Exports to final csv file
+df.to_csv(fileDir+"GSfinalcsv.csv")
+
+from __future__ import print_function
+import uszipcode as usz
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+from statistics import mean
+fileDir= ("C:/Users/Nick Justice/Desktop/")
+df = pd.read_csv(fileDir+"GSfinalcsv.csv")
+pCodeEval = []
+pcodeIncome = []
+i = 0
+for row in df["postalCode"]:
+    row = str(row)
+    if '-' in row:
+        row = row.split('-',1)[0]
+        pCodeEval.append(row)
+    else:
+        pCodeEval.append(row)
+    with usz.SearchEngine() as search:
+        zipcode = search.by_zipcode(row)
+        zipcode = zipcode.to_dict()
+        val = zipcode.get("median_household_income")
+        print(str(i) + ": " + str(val))
+        i+=1
+        pcodeIncome.append(val)
+df["postalCode"] = pd.Series(pCodeEval, index=df.index)
+df["postalCode"] = df["postalCode"].replace("nan",value=0)
+df["area_median_house_income"] = pcodeIncome
+
+price_rating = []
+i = 0
+for row in df["area_median_house_income"]:
+    price_average_num = df.loc[i,"price.average"]
+    if price_average_num != 0:
+        pricerating = row / df.loc[i,"price.average"]
+    else:
+        pricerating = 0
+    i += 1
+    price_rating.append(pricerating)
+
+clean_price_rating = [value for value in price_rating if value != 0 and (math.isnan(value) == False)]
+ratingmean = mean(clean_price_rating)
+print(ratingmean)
+GoodorBad = []
+for row in price_rating:
+    if row == 0:
+        GoodorBad.append("None")
+    elif row > ratingmean:
+        GoodorBad.append("Bad")
+    elif row < ratingmean:
+        GoodorBad.append("Good")
+
+l = 0
+price_average = []
+for row in df["area_median_house_income"]:
+    if (math.isnan(row) == False) and (math.isnan(df.loc[l,"price.average"]) == False):
+        pCode = df.loc[l,"postalCode"]
+        with usz.SearchEngine() as search:
+            zipcode = search.by_zipcode(pCode)
+            zipcode = zipcode.to_dict()
+            medianhouseincome = (zipcode.get("median_household_income"))
+        price_average.append(medianhouseincome / ratingmean)
+    else:
+        price_average.append(row)
+    l += 1
+df["price.average"] = price_average
+df.to_csv(fileDir+"UpdatedFinal.csv")
+
+fileDir= ("C:/Users/Nick Justice/Desktop/")
+df = pd.read_csv(fileDir+"UpdatedFinal.csv")
+GoodorBad = []
+print(len(price_rating))
+print(ratingmean)
+for row in price_rating:
+    if row == 0:
+        GoodorBad.append("None")
+    elif row > ratingmean:
+        GoodorBad.append("Bad")
+    elif row < ratingmean:
+        GoodorBad.append("Good")
+    else:
+        GoodorBad.append("None")
+df["price.rating"] = GoodorBad
+df.to_csv(fileDir+"UpdatedFinal.csv")
