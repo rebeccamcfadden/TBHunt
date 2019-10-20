@@ -6,9 +6,9 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route("/tacos")
+@app.route("/results")
 def tacos():
-    return render_template('food_template.html')
+    return render_template('results.html')
 
 @app.route("/", methods=['POST'])
 def food():

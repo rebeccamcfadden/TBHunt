@@ -11,6 +11,16 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
     <script src="../static/script.js"></script>
+    <script>
+        function showSubmitBtn() {
+            if ($('#zipCode').val().length >= 5) {
+                $('.submitBtn').fadeIn();
+            }
+            else {
+                $('.submitBtn').fadeOut();
+            }
+        }
+    </script>
     <title>TBHunt</title>
 </head>
 <body>
@@ -24,7 +34,7 @@
                     <nav class="nav nav-pills nav-fill">
                         <!-- <div class="no-option-selected"> -->
                             <a class="nav-item nav-link rounded-0" id="tacos">&nbspTacos&nbsp&nbsp</a>
-                            <div>&nbsp&nbsp&nbsp</div>
+                            <!-- <div>&nbsp&nbsp&nbsp</div> -->
                             <a class="nav-item nav-link rounded-0" id="burritos">Burritos</a>
                         <!-- </div> -->
                         <div class="option-selected" style="display:none;">
@@ -33,8 +43,9 @@
                 </div>
                 <form method="POST">
                     <div class="ingredients1 choices">
+                        <p class="headers">Ingredients:</p>
                         <input id="foodChoice" name="foodChoice" value="" type="hidden">
-                        <select name="ingredients" data-placeholder="Pick three ..." multiple class="chosen-select" tabindex="1">
+                        <select name="ingredients" data-placeholder="Pick three ..." multiple class="chosen-select" tabindex="2">
                             <option value="United States">United States</option>
                             <option value="United Kingdom">United Kingdom</option>
                             <option value="Afghanistan">Afghanistan</option>
@@ -45,18 +56,24 @@
                         </select>
                     </div>
                     <div class="allergies choices">
-                            <select name="allergies" data-placeholder="Pick one ..." class="teno" tabindex="1">
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                            </select>
-                        </div>
+                        <p class="headers">Allergy: </p>
+                        <select name="allergies" data-placeholder="Pick an allergy.." class="chosen-select-2" tabindex="1">
+                            <option value="" disabled selected>Select an allergy:</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Aland Islands">Aland Islands</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="American Samoa">American Samoa</option>
+                        </select>
+                    </div>
+                    <div class="zipCode" style="text-align: left;">
+                        <p class="headers">Zip Code:</p>
+                        <input id="zipCode" name="zipCode" oninput="showSubmitBtn()">
+                    </div>
                     <div>     
-                        <input type="submit" value="Submit">
+                        <button class="submitBtn" type="submit" value="Submit">Calculate!</button>
                     </div>
                 </form>
             </div>
