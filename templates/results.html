@@ -28,9 +28,7 @@
                         </div>
                         <div class="col companyInfo" style="text-align: left;">
                                 <h1>{{ post.item }}</h1>
-                                <p>{{ post.cost }} <br> Key Ingredients: 
-                                    {% for i in range(0,post.description|length) %} {{ post.description[i] }}</p>
-                                    {%  endfor %}
+                                <p>Key Ingredients: {{ post.description }}</p>
                         </div>
                     </div>
                 </a>
