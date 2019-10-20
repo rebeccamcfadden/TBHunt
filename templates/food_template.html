@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <title>TBHunt</title>
+    </head>
+    <script>
+    $(document).ready(function(){
+        $(document).on("click", ".choice", function() {
+            var newUrl = $(this).parent().attr("href");
+            $("html").animate({ height: 0, opacity: 0 }, 'slow');
+            $("html").fadeOut(function() {
+                location = newUrl;
+            });
+            return false;
+        });
+    });
+    </script>
+    <body>
+        <div class="center">
+            <img class="img-circle" src="https://www.liveeatlearn.com/wp-content/uploads/2017/03/tempeh-tacos-avocado-kiwi-salsa-10.jpg">
+            <h1>TBHunt</h1>
+            <div class="foodChoice">
+                <a href="/"><div class="choice">TACOS</div></a>
+                <a href="/"><div class="choice">BURRITOS</div></a>
+            </div>
+        </div>
+    </body>
+</html>

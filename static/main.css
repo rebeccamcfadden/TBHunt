@@ -1,0 +1,45 @@
+@font-face{
+    font-family: regular;
+    src: url('/static/Fonts/NoticiaText-Regular.ttf');
+    font-weight: bold;
+}
+
+@font-face{
+    font-family: boldItalic;
+    src: url('/static/Fonts/NoticiaText-BoldItalic.ttf');
+    font-weight: bold;
+}
+
+html,body{
+    width:100%;
+    margin:0;
+    height:100%;
+}
+
+body {
+    background-color: black !important;
+}
+
+.coName {
+    font-family: boldItalic;
+    font-size: 80px;
+    color: green;
+    margin-top: 10px;
+}
+
+.foodSelection {
+    font-family: regular;
+    border: 3px solid;
+    border-color: grey;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.nav-item {
+    color: white;
+}
+
+.nav-item:hover {
+    background-color:green;
+    color:white;
+}

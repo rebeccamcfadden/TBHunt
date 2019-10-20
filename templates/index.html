@@ -1,21 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
-    <title>TacoBurrito Hunt</title>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-
-    <h1>Datastore and Firebase Auth Example</h1>
-
-    <h2>Last 10 visits</h2>
-    {% for time in times %}
-    <p>{{ time }}</p>
-    {% endfor %}
-
-</body>
-
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <title>TBHunt</title>
+    </head>
+    <body>
+        <div class="container w-100 h-100">
+            <div class="row justify-content-center align-items-center h-100" style="text-align: center;">
+                <div class="col-md-6">
+                    <img class="img-circle" style="height: 100px; width: 100px;" src="https://www.liveeatlearn.com/wp-content/uploads/2017/03/tempeh-tacos-avocado-kiwi-salsa-10.jpg">
+                    <h1 class="coName">TBHunt</h1>
+                    <div class="foodSelection">
+                        <nav class="nav nav-pills nav-fill">
+                                <a class="nav-item nav-link rounded-0" href="#">Tacos</a>
+                                <a class="nav-item nav-link rounded-0" href="#">Burritos</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
