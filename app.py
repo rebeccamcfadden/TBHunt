@@ -6,6 +6,9 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/home")
 def home():
+    newdict = {'radish': 100, 'tofu': 116, 'zucchini': 116, 'tuna': 123, 'scallion': 142, 'cod': 175, 'carrot': 180, 'poblano': 182, 'mayo': 194, 'honey': 195, 'cucumber': 208, 'tilapia': 226, 'spinach': 274, 'pineapple': 294, 'hash': 297, 'mahi': 342, 'mushroom': 363, 'queso': 372, 'chorizo': 395, 'ham': 401, 'tomatillo': 402, 'aioli': 448, 'carne': 469, 'jalapeno': 472, 'olive': 544, 'sirloin': 585, 'wahoo': 651, 'slaw': 780, 'chile': 799, 'avocado': 866, 'bacon': 1177, 'potato': 1186, 'carnita': 1271, 'shrimp': 1290, 'lime': 1335, 'fish': 1377, 'sausage': 2038, 'pork': 2156, 'cabbage': 2217, 'guacamole': 2615, 'pepper': 2764, 'cilantro': 3146, 'pico': 3273, 'steak': 3725, 'egg': 4131, 'cream': 4314, 'tomato': 4384, 'corn': 4522, 'flour': 4928, 'beef': 5421, 'rice': 6111, 'onion': 6178, 'salsa': 6369, 'chicken': 6487, 'lettuce': 6498, 'sauce': 6828, 'bean': 8431,  'cheese': 13832}
+    ingredients = newdict.keys()
+    ingredients = ingredients.sort()
     return render_template('index.html')
 
 @app.route("/", methods=['POST'])
