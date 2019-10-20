@@ -10,6 +10,10 @@
     font-weight: bold;
 }
 
+.limitedNumbChosen, .limitedNumbSelect2{
+    width: 400px;
+  }
+
 html,body{
     width:100%;
     margin:0;
