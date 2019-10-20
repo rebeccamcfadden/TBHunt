@@ -46,26 +46,19 @@
                         <p class="headers">Ingredients:</p>
                         <input id="foodChoice" name="foodChoice" value="" type="hidden">
                         <select name="ingredients" data-placeholder="Pick three ..." multiple class="chosen-select" tabindex="2">
-                            <option value="United States">United States</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="Afghanistan">Afghanistan</option>
-                            <option value="Aland Islands">Aland Islands</option>
-                            <option value="Albania">Albania</option>
-                            <option value="Algeria">Algeria</option>
-                            <option value="American Samoa">American Samoa</option>
+                            {% for post in posts %}
+                            <option value='{{ post }}'>{{ post }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="allergies choices">
                         <p class="headers">Allergy: </p>
                         <select name="allergies" data-placeholder="Pick an allergy.." class="chosen-select-2" tabindex="1">
                             <option value="" disabled selected>Select an allergy:</option>
-                            <option value="United States">United States</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="Afghanistan">Afghanistan</option>
-                            <option value="Aland Islands">Aland Islands</option>
-                            <option value="Albania">Albania</option>
-                            <option value="Algeria">Algeria</option>
-                            <option value="American Samoa">American Samoa</option>
+                            <option value="AAAAA">None</option>
+                            {% for post in posts %}
+                            <option value='{{ post }}'>{{ post }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="zipCode" style="text-align: left;">
