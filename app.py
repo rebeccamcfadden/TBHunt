@@ -51,8 +51,8 @@ def food():
     topten = mydata.head(10)
     posts = []
     for index, row in topten.iterrows():
-        mydict = {'item':row['menus.name'],
-                    'name':row['name'],
+        mydict = {'item':row['menus.name'].title(),
+                    'name':row['name'].title(),
                     'address':row['address'],
                     'description':row['menus.description'],
                     'price':row['price.average']
