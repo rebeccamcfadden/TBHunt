@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request
 import pandas as pd
 from decimal import *
+import unidecode
 
 app = Flask(__name__)
 
@@ -29,8 +30,13 @@ def food():
         row = str(row)
         contains.append(0)
         i = len(contains) -1
+        try:
+            row = unidecode.unidecode(row)
+        except:
+            contains[i] = 10
+            continue
         for ingredient in ingredients:
-            if row != 'nan' and ingredient in row:
+            if ingredient in row:
                 contains[i] -=1
         if exclude in row or exclude + 's' in row:
             contains[i] = 10
@@ -55,12 +61,15 @@ def food():
     posts = []
     for index, row in topten.iterrows():
         mapLink = row['address'].replace(" ", "+")
+        if row['price.rating'] == "None":
+            row['price.rating'] = "N/a"
         mydict = {'item':row['menus.name'].title(),
                     'name':row['name'].title(),
                     'address':row['address'],
                     'description':row['menus.description'],
                     'price':str(round(Decimal(row['price.average']), 2)),
                     'mapLink': mapLink,
+                    'rating': row['price.rating']
                 }
         posts.append(mydict)
     return render_template('results.html', posts=posts)
