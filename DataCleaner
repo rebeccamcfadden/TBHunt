@@ -1,6 +1,9 @@
+#Set file directory
 fileDir= ("C:/Users/Nick Justice/Desktop/")
+
+#Initial imports
 import re
-#import spacy
+import spacy
 import math
 import pandas as pd
 from collections import Counter
@@ -8,12 +11,14 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import numpy as np
 
+#Initial df creation and fillna
 unnamedlist = []
 df = pd.read_csv(fileDir+"just-tacos-and-burritos.csv", sep=',', quotechar='"')
 for i in range(26,236):
     unnamedlist.append("Unnamed:"+" "+str(i))
 df = df.drop(unnamedlist, axis=1)
 df.fillna("", inplace=True)
+
 #deleting unwanted columns
 del df["dateAdded"]
 del df["dateUpdated"]
@@ -23,7 +28,7 @@ del df["menus.dateSeen"]
 del df["priceRangeCurrency"]
 del df["menus.currency"]
 
-#turn menus.name into either taco or burrito
+#create column tacovburrito and put either taco or burrito depending on menus.name
 tacovburrito = []
 df["menus.name"] = df["menus.name"].str.lower()
 for row in df["menus.name"]:
@@ -35,7 +40,7 @@ for row in df["menus.name"]:
         tacovburrito.append("")
 df["tacovburrito"] = pd.Series(tacovburrito, index=df.index)
 
-#Compute averages between menus.amountMax and menus.amountMin and new avg column
+#Compute averages between menus.amountMax and menus.amountMin and append to price.average
 df["menus.amountMax"] = df["menus.amountMax"].replace("",value=0)
 df["menus.amountMin"] = df["menus.amountMin"].replace("",value=0)
 df["menus.amountMax"] = df["menus.amountMax"].astype(float)
@@ -47,35 +52,34 @@ del df["priceRangeMax"]
 del df["menus.amountMax"]
 del df["menus.amountMin"]
 
-# #Gets the most common nouns from each menu.description
-# filterphrase = ''
-# filter_nouns = {}
-# nlp = spacy.load("en_core_web_sm")
-# df["menus.description"].fillna("", inplace = True)
-# df["menus.description"].str.lower()
-# for i in range(8):
-#   filterphrase = ''
-#   begin = 0 + i*10000
-#   if i < 7:
-#     chunk = df["menus.description"][begin:begin+10000]
-#   else:
-#     chunk = df["menus.description"][begin:]
-#   for row in chunk:   
-#     filterphrase += ' '
-#     filterphrase += str(row)
-#   doc = nlp(filterphrase)
-#   for noun in [token.lemma_ for token in doc if token.pos_ == "NOUN"]:
-#     if noun not in filter_nouns.keys():
-#       filter_nouns.update({noun: 1})
-#     else:
-#       filter_nouns[noun] +=1
-
-
+#Gets the most common nouns from each menu.description
+filterphrase = ''
+filter_nouns = {}
+nlp = spacy.load("en_core_web_sm")
+df["menus.description"].fillna("", inplace = True)
+df["menus.description"].str.lower()
+for i in range(8):
+  filterphrase = ''
+  begin = 0 + i*10000
+  if i < 7:
+    chunk = df["menus.description"][begin:begin+10000]
+  else:
+    chunk = df["menus.description"][begin:]
+  for row in chunk:   
+  filterphrase += ' '
+    filterphrase += str(row)
+  doc = nlp(filterphrase)
+  for noun in [token.lemma_ for token in doc if token.pos_ == "NOUN"]:
+    if noun not in filter_nouns.keys():
+      filter_nouns.update({noun: 1})
+    else:
+      filter_nouns[noun] +=1
+       
+#Create graph to visualize most recurring ingredients
 # width = 1.0
 # from collections import OrderedDict
 # from operator import itemgetter
 # sort = OrderedDict(sorted(filter_nouns.items(), key=itemgetter(1)))
-
 # print(sort)
 # print(list(sort.keys())[-50:0])
 # plt.bar(list(sort.keys())[-25:], list(sort.values())[-25:], width, color = 'g')
@@ -143,7 +147,11 @@ for row in price_rating:
         GoodorBad.append("Bad")
     elif row < ratingmean:
         GoodorBad.append("Good")
+    else:
+        GoodorBad.append("None")
+df["price.rating"] = GoodorBad
 
+#finds price.average for empty price.average fields using zipcodes
 l = 0
 price_average = []
 for row in df["area_median_house_income"]:
@@ -160,19 +168,3 @@ for row in df["area_median_house_income"]:
 df["price.average"] = price_average
 df.to_csv(fileDir+"UpdatedFinal.csv")
 
-fileDir= ("C:/Users/Nick Justice/Desktop/")
-df = pd.read_csv(fileDir+"UpdatedFinal.csv")
-GoodorBad = []
-print(len(price_rating))
-print(ratingmean)
-for row in price_rating:
-    if row == 0:
-        GoodorBad.append("None")
-    elif row > ratingmean:
-        GoodorBad.append("Bad")
-    elif row < ratingmean:
-        GoodorBad.append("Good")
-    else:
-        GoodorBad.append("None")
-df["price.rating"] = GoodorBad
-df.to_csv(fileDir+"UpdatedFinal.csv")
