@@ -72,6 +72,8 @@ def food():
                     'rating': row['price.rating']
                 }
         posts.append(mydict)
+    posts.reverse()
+    # posts = posts.reverse()
     return render_template('results.html', posts=posts)
 # @app.route("/about")
 # def yo():
